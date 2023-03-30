@@ -676,8 +676,10 @@ def evaluate_js(script, uid, result_id=None):
     if is_cef:
         return CEF.evaluate_js(script, result_id, uid)
     else:
-        return BrowserView.instances[uid].evaluate_js(script)
-
+        try:
+            return BrowserView.instances[uid].evaluate_js(script)
+        except KeyError:
+            return None
 
 def get_position(uid):
     return BrowserView.instances[uid].Left, BrowserView.instances[uid].Top
